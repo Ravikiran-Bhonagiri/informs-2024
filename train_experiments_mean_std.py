@@ -135,7 +135,7 @@ def train_and_validate(model, train_loader, val_loader, test_loader, model_name,
 
             labels = batch['labels'].to(device)
 
-            author_id_true = labels[:, 4].long()
+            #author_id_true = labels[:, 4].long()
             comment_count_true = labels[:, 0]
             heart_count_true = labels[:, 1]
             play_count_true = labels[:, 2]
@@ -143,21 +143,21 @@ def train_and_validate(model, train_loader, val_loader, test_loader, model_name,
 
             # Forward pass
             outputs = model(**inputs)
-            author_id_pred = outputs['author_id_pred'].squeeze()
+            #author_id_pred = outputs['author_id_pred'].squeeze()
             comment_count_pred = outputs['comment_count_pred'].squeeze()
             heart_count_pred = outputs['heart_count_pred'].squeeze()
             play_count_pred = outputs['play_count_pred'].squeeze()
             share_count_pred = outputs['share_count_pred'].squeeze()
 
             # Compute losses
-            loss_author_id = criterion_cross_entropy(author_id_pred, author_id_true)  # CrossEntropy for author ID
+            #loss_author_id = criterion_cross_entropy(author_id_pred, author_id_true)  # CrossEntropy for author ID
             loss_comment_count = criterion_regression(comment_count_pred, comment_count_true)
             loss_heart_count = criterion_regression(heart_count_pred, heart_count_true)
             loss_play_count = criterion_regression(play_count_pred, play_count_true)
             loss_share_count = criterion_regression(share_count_pred, share_count_true)
 
-            total_batch_loss = (loss_author_id + 1*loss_comment_count + 1*loss_heart_count +
-                                1*loss_play_count + 1*loss_share_count)
+            #total_batch_loss = (loss_author_id + 1*loss_comment_count + 1*loss_heart_count + 1*loss_play_count + 1*loss_share_count)
+            total_batch_loss = (1*loss_comment_count + 1*loss_heart_count + 1*loss_play_count + 1*loss_share_count)
             total_batch_loss.backward()
             optimizer.step()
             total_loss += total_batch_loss.item()
